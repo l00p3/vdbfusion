@@ -24,9 +24,6 @@ pybind11_add_module(vdbfusion_pybind vdbfusion_pybind.cpp)
 target_compile_options(vdbfusion_pybind PRIVATE -Werror -Wall -Wextra)
 target_link_libraries(vdbfusion_pybind PRIVATE VDBFusion::vdbfusion)
 
-# Set the ouput directory for vdbfusion python lib
-if(VDBFUSION_PYBIND_LIBRARY_OUTPUT_DIRECTORY)
-  # The generator-expression handle the multi-config generators case (see cmake documentation)
-  set_target_properties(vdbfusion_pybind PROPERTIES LIBRARY_OUTPUT_DIRECTORY
-                                                    $<1:${VDBFUSION_PYBIND_LIBRARY_OUTPUT_DIRECTORY}>)
+if(SKBUILD)
+  install(TARGETS vdbfusion_pybind LIBRARY DESTINATION vdbfusion/pybind)
 endif()
