@@ -12,10 +12,13 @@ test = ["pytest"]
 
 [tool.scikit-build]
 build-dir = "build/{wheel_tag}"
-cmake.minimum-version = "3.10"
+cmake.version = ">=3.28"
 editable.mode = "redirect"
 editable.rebuild = true
 editable.verbose = true
+
+[tool.cibuildwheel]
+skip = ["*-musllinux*",  "pp*", "cp36-*"]
 
 [tool.black]
 line-length = 100
