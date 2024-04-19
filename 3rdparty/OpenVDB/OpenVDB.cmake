@@ -71,6 +71,10 @@ else()
     endif()
   endif()
 endif()
+
+# openvdb misses linking this as a dependent library. TODO: PR or Issue?
+# doing the following also needs a bump in cmake version to 3.13 because of some policy
+target_link_libraries(openvdb_static PUBLIC Boost::numeric_conversion)
 add_library(OpenVDB::openvdb ALIAS openvdb_static)
 
 if(PYOPENVDB_SUPPORT_ENABLED)

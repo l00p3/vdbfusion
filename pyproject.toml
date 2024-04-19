@@ -18,7 +18,9 @@ editable.rebuild = true
 editable.verbose = true
 
 [tool.cibuildwheel]
-skip = ["*-musllinux*",  "pp*", "cp36-*"]
+# https://www.openvdb.org/documentation/doxygen/dependencies.html
+# openvdb minimum python version is 3.9
+skip = ["*-musllinux*",  "pp*", "cp36-*", "cp37-*", "cp38-*"]
 
 [tool.black]
 line-length = 100

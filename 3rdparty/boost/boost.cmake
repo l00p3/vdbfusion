@@ -21,7 +21,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-set(BOOST_INCLUDE_LIBRARIES headers CACHE STRING "Boost list of libraries to be configured.")
+function(set_target_system_include_dirs TARGET_NAME)
+  get_target_property(interface_include_dirs ${TARGET_NAME} INTERFACE_INCLUDE_DIRECTORIES)
+  set_target_properties(${TARGET_NAME} PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${interface_include_dirs}")
+endfunction()
+
+# numeric/conversion is not included in OpenVDB's cmake when find packaging,
+# although they use the headers in their math code. we can make a PR?
+set(BOOST_INCLUDE_LIBRARIES headers numeric/conversion CACHE STRING "Boost list of libraries to be configured.")
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Boost built as shared lib.")
 
 set(boost_fetch_content_args URL
@@ -44,8 +51,8 @@ else()
     else()
       # Emulate the SYSTEM flag introduced in CMake 3.25.
       add_subdirectory(${boost_SOURCE_DIR} ${boost_BINARY_DIR} EXCLUDE_FROM_ALL)
-      get_target_property(boost_include_dirs boost_headers INTERFACE_INCLUDE_DIRECTORIES)
-      set_target_properties(boost_headers PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${boost_include_dirs}")
+      set_target_system_include_dirs(boost_headers)
+      set_target_system_include_dirs(boost_numeric_conversion)
     endif()
 
     # Emulate the OVERRIDE_FIND_PACKAGE behaviour in 3.24
