@@ -22,6 +22,8 @@
 # SOFTWARE.
 
 include(${CMAKE_CURRENT_LIST_DIR}/../tbb/tbb.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../boost/boost.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../zlib/zlib.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../blosc/blosc.cmake)
 
 if(PYOPENVDB_SUPPORT_ENABLED)
@@ -31,7 +33,7 @@ else()
 endif()
 set(OPENVDB_CORE_SHARED OFF CACHE BOOL "Build OpenVDB shared lib.")
 set(OPENVDB_CORE_STATIC ON CACHE BOOL "Build OpenVDB static lib.")
-# Boost is no longer a dependency if DELAYED LOADING is OFF
+# Boost headers is the only required component if DELAYED LOADING is off
 set(OPENVDB_USE_DELAYED_LOADING OFF CACHE BOOL "OpenVDB delayed loading.")
 set(OPENVDB_CXX_STRICT OFF CACHE BOOL "OpenVDB CXX strict.")
 set(OPENVDB_BUILD_VDB_PRINT OFF CACHE BOOL "Build OpenVDB VDB print.")
